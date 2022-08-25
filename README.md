@@ -5,11 +5,11 @@
 > - [ ] Assign customer to teller queue based on the type of service they require
 > - [ ] Tellers serve customers
 > ---
-> ## Goal
+> ### Goal
 > - Serving customer in the shortest possible time
 > - 
 
-> [!question] CREATIVITY
+> ## CREATIVITY
 > - [ ] Make some customers have higher priority
 > - [ ] Optimize customer-to-queue assignment algorithm 
 > - [ ] Responsive and interactive user interface
