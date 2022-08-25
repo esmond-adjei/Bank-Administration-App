@@ -1,15 +1,16 @@
 # Bank Ticketing System
 
-> ## OBJECTIVES
-> - [ ] Input customers
-> - [ ] Assign customer to teller queue based on the type of service they require
+## OBJECTIVES
+> - [ ] Input `customers`
+> - [ ] Assign customer to a `teller queue` based on the type of service they require
 > - [ ] Tellers serve customers
 > ---
-> ### Goal
+
+## GOALS
 > - Serving customer in the shortest possible time
 > - 
 
-> ## CREATIVITY
+## CREATIVE AD-ONS
 > - [ ] Make some customers have higher priority
 > - [ ] Optimize customer-to-queue assignment algorithm 
 > - [ ] Responsive and interactive user interface
@@ -33,4 +34,4 @@ The Bank Ticketing System has three main operations
 
 ---
 # Diagram
-![[bank queue.png]]
+![[./Snip/bank queue.png]]
