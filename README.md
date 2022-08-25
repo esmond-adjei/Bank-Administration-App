@@ -34,4 +34,4 @@ The Bank Ticketing System has three main operations
 
 ---
 # Diagram
-![[./Snip/bank queue.png]]
+![[https://github.com/esmond-adjei/Bank-Ticketing-Application/blob/main/Snip/bank%20queue.png]]
