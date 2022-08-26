@@ -1,4 +1,7 @@
 # from account import Account
+from dataclasses import dataclass
+import queue
+from sqlite3 import OperationalError
 from operations import get_fullname, select_cartegory
 from customer import *
 from tellerQueue import TellerQueue
@@ -31,7 +34,7 @@ from tellerQueue import TellerQueue
 # account_type = select_cartegory(acc_type)
 # acc_1 = Account(fullname,account_type)
 # data = acc_1.export_data()
-# with open('bank-database.txt','a') as db:
+# with open('client-database.txt','a') as db:
 #     db.write(f"\n{data}")
 
 # ============================================== #
@@ -50,6 +53,4 @@ print(cust_1)
 print("CREATE TELLER QUEUE")
 que_1 = TellerQueue(make_account_id('T'), get_fullname(), select_cartegory(services))
 length = que_1.current_queue_size()
-print(length)
 que_1.enqueue(cust_1)
-print(que_1)
