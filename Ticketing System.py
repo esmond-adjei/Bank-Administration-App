@@ -39,7 +39,6 @@ def get_service_request():
         else:
             print("\nEnter a valid option!!!\n")
 
-
 def get_task():
     while True:
         try:
@@ -55,7 +54,6 @@ def get_task():
                 return task
         except ValueError:
             print("\nEnter a correct task!!!")
-
 
 def admin():
     task = get_task()
