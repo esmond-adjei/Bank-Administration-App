@@ -1,13 +1,35 @@
+from operations import make_account_id
+from datetime import datetime
+
 ## ACCOUNT OBJECT
 class Account:
-    def __init__(self, account_name, account_id, account_type):
+    def __init__(self, account_name, account_type=None):
         self.name = account_name
-        self.id = account_id
         self.type = account_type
         self.balance = 0
+        self.id = make_account_id()
 
     def check_balance(self):
-        return self.balance
+        return self.balance 
+    
+    def export_data(self,):
+        '''collects useful data and metadata into a dictionary'''
+        account_db = {}
+        account_db['Account Name'] = self.name
+        account_db['Account Number']= self.id
+        account_db['Account Type']= self.type
+        account_db['Account Balance']= self.check_balance()
+        account_db['__DATE CREATED']= str(datetime.today())
+        return account_db
+
+    def __repr__(self):
+        firstname,surname,other_name = 0,1,2
+        return f'''
+            Account Name: {self.name[surname]}, {self.name[firstname]} {self.name[other_name]}
+            Account Number: {self.id}
+            Account Type: {self.type} Account
+            Account Balance: *** 
+        '''
 
 
 ## ACCOUNT SERVICES FUNCTIONS
@@ -43,14 +65,3 @@ def notification(success_value,function,amount,account,notify=True):
         prep, status = (' of','Successful') if success_value else ('','Failed to')
         print(f"BT<< {status} {function.__name__}{prep} GHS {amount}. {account.name} balance is GHS {account.balance}")
 
-
-# ========================================================== #
-esmond = Account('Esmond','12345678','student')
-osbert = Account('Osbee','98765432','enterprise')
-
-deposit(1000,esmond)
-withdraw(10,esmond)
-transfer(esmond,osbert,1000)
-
-print("\nEsmond account balance:", esmond.check_balance())
-print("Osbee account balance:",osbert.check_balance())
