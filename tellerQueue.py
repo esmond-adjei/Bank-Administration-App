@@ -1,4 +1,3 @@
-
 class TellerQueue:
     """A class for tellers"""
     front = 0 # Indicates the beginning of the queue

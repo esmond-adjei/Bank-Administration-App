@@ -1,5 +1,5 @@
-from Customer import Customer
-from Teller import TellerQueue
+from customer import Customer
+from tellerQueue import TellerQueue
 
 print("*" * 6, "Welcome to DIGJES Bank", "*" * 6, end="\n")
 
