@@ -1,0 +1,3 @@
+{'Account Name': ['Osbert', 'Adjei', 'Ellis'], 'Account Number': 'DT-1725-724030', 'Account Type': 'Work', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 17:05:50.320427'}
+{'Account Name': ['Esmond', 'Adjei', ''], 'Account Number': 'DT-1726-468738', 'Account Type': 'Student', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 17:06:24.791407'}
+{'Account Name': ['Prosper', 'Adjei', 'Kwame'], 'Account Number': 'DT-1727-495505', 'Account Type': 'Savings', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 17:07:27.468159'}
