@@ -11,18 +11,20 @@ class Customer:
 
     def set_priority(self, is_prior):
         """Sets priority level of the customer"""
-        self.priority_level = is_prior
+        self.priority = is_prior
 
-    def issue_ticket(self,):
+    def issue_ticket(self):
         if self.priority:
-            self.ticket_ID = '0-P'
+            self.ticket_ID = 'P'
         else:
-            self.ticket_ID = '1-C'
-        return self.ticket_ID + make_account_id('C')
+            self.ticket_ID = 'C'
+        self.ticket_ID = self.ticket_ID + make_account_id('C-')
+        return self.ticket_ID
 
     def __repr__(self):
         firstname,surname,other_name = 0,1,2
         return f'''
             Customer Name: {self.name[surname]}, {self.name[firstname]} {self.name[other_name]}
-            Service demand: {self.service_request}
+            Type of Service: {self.service_request}
+            Ticket ID: {self.ticket_ID}
         '''

@@ -25,7 +25,6 @@ def get_amount():
         amount = input("BT>> ")
     return  round(float(amount),2)
 
-
 def get_fullname():
     '''Returns a fullname in a list'''
     print("BT>> Enter first name")
@@ -60,7 +59,7 @@ def select_cartegory(options):
             continue
 
 ## UNIQUE ID GENERATOR
-def make_account_id(self, prefix='DT-'):
+def make_account_id(prefix='DT-'):
     '''Random manipulation to generate id from date and time'''
     code = str(datetime.today())
     for l in code:

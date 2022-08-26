@@ -1,3 +1,6 @@
 {'Account Name': ['Osbert', 'Adjei', 'Ellis'], 'Account Number': 'DT-1725-724030', 'Account Type': 'Work', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 17:05:50.320427'}
 {'Account Name': ['Esmond', 'Adjei', ''], 'Account Number': 'DT-1726-468738', 'Account Type': 'Student', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 17:06:24.791407'}
 {'Account Name': ['Prosper', 'Adjei', 'Kwame'], 'Account Number': 'DT-1727-495505', 'Account Type': 'Savings', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 17:07:27.468159'}
+{'Account Name': ['Hilda', 'Adjei', 'Abena'], 'Account Number': 'DT-1865-279870', 'Account Type': 'Work', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 18:45:05.905404'}
+{'Account Name': ['Ellen', 'Adjei', 'Ohenewaa'], 'Account Number': 'DT-1865-735445', 'Account Type': 'Savings', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 18:45:51.462438'}
+{'Account Name': ['Ignatus', 'Anim', ''], 'Account Number': 'DT-1867-315586', 'Account Type': 'Student', 'Account Balance': 0, '__DATE CREATED': '2022-08-26 18:47:09.477002'}

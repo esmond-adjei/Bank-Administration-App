@@ -1,3 +1,6 @@
+from operations import get_fullname, get_name, make_account_id, select_cartegory
+
+
 class TellerQueue:
     """A class for tellers"""
     front = 0 # Indicates the beginning of the queue
@@ -45,7 +48,6 @@ class TellerQueue:
     def __repr__(self):
         """Displays the customers in the queue"""
         for i in range(self.current_queue_size()):
-            print(f"{str(self.queue[i].name)}: {str(self.queue[i].ticket_ID)}")
-
-        return ""
-        
+            customer_name = ' '.join(self.queue[i].name)
+            customer_ticket_ID = self.queue[i].ticket_ID
+            print(f"{i+1}. {customer_name}: {customer_ticket_ID}")
