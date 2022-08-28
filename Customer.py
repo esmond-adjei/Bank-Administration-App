@@ -6,7 +6,7 @@ class Customer:
 
     def __init__(self, name, service_request=None, is_prior=False):
         self.name = name
-        self.service_request = service_request
+        self.service = service_request
         self.priority = is_prior
 
     def set_priority(self, is_prior):
@@ -25,6 +25,6 @@ class Customer:
         firstname,surname,other_name = 0,1,2
         return f'''
             Customer Name: {self.name[surname]}, {self.name[firstname]} {self.name[other_name]}
-            Type of Service: {self.service_request}
+            Type of Service: {self.service}
             Ticket ID: {self.ticket_ID}
         '''

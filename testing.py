@@ -52,5 +52,6 @@ print(cust_1)
 # ============================================== #
 print("CREATE TELLER QUEUE")
 que_1 = TellerQueue(make_account_id('T'), get_fullname(), select_cartegory(services))
-length = que_1.current_queue_size()
 que_1.enqueue(cust_1)
+length = que_1.current_queue_size()
+print(que_1)
