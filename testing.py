@@ -5,6 +5,30 @@ from sqlite3 import OperationalError
 from operations import get_fullname, select_cartegory
 from customer import *
 from tellerQueue import TellerQueue
+import json
+
+
+
+# load text file
+with open('client-database.txt', 'r+') as db:
+    for line in db.readlines():
+        # data = db.readline()
+        jsdb = json.dumps(line)
+
+
+print(jsdb)
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Create dummy accounts
     # - [x] account name
@@ -38,20 +62,20 @@ from tellerQueue import TellerQueue
 #     db.write(f"\n{data}")
 
 # ============================================== #
-print("CREATE CUSTOMER")
-services = {
-    '1':'Deposit',
-    '2':'Transfer',
-    '3':'Withdraw',
-}
-cust_1 = Customer(get_fullname(), select_cartegory(services))
-cust_1.set_priority(True)
-cust_1.issue_ticket()
-print(cust_1)
+# print("CREATE CUSTOMER")
+# services = {
+#     '1':'Deposit',
+#     '2':'Transfer',
+#     '3':'Withdraw',
+# }
+# cust_1 = Customer(get_fullname(), select_cartegory(services))
+# cust_1.set_priority(True)
+# cust_1.issue_ticket()
+# print(cust_1)
 
-# ============================================== #
-print("CREATE TELLER QUEUE")
-que_1 = TellerQueue(make_account_id('T'), get_fullname(), select_cartegory(services))
-que_1.enqueue(cust_1)
-length = que_1.current_queue_size()
-print(que_1)
+# # ============================================== #
+# print("CREATE TELLER QUEUE")
+# que_1 = TellerQueue(make_account_id('T'), get_fullname(), select_cartegory(services))
+# que_1.enqueue(cust_1)
+# length = que_1.current_queue_size()
+# print(que_1)
