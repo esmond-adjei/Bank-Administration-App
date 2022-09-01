@@ -1,7 +1,4 @@
 # from account import Account
-from dataclasses import dataclass
-import queue
-from sqlite3 import OperationalError
 from operations import get_fullname, select_cartegory
 from customer import *
 from tellerQueue import TellerQueue
