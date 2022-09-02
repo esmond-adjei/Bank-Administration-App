@@ -1,30 +1,27 @@
-# from account import Account
-from operations import get_fullname, select_cartegory
-from customer import *
-from tellerQueue import TellerQueue
-import json
+from tkinter import *
+
+window = Tk()
+frame = LabelFrame(window)
+frame.pack(padx=10, pady=10)
+
+b = Button(frame, text="#")
+b.pack()
+window.mainloop()
+
+# # from account import Account
+# from operations import get_fullname, select_cartegory
+# from customer import *
+# from tellerQueue import TellerQueue
+# import json
 
 
 
-# load text file
-with open('client-database.txt', 'r+') as db:
-    for line in db.readlines():
-        # data = db.readline()
-        jsdb = json.dumps(line)
-
-
-print(jsdb)
-
-
-
-
-
-
-
-
-
-
-
+# # load text file
+# with open('client-database.txt', 'r+') as db:
+#     for line in db.readlines():
+#         # data = db.readline()
+#         jsdb = json.dumps(line)
+# print(jsdb)
 
 
 # Create dummy accounts
