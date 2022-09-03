@@ -17,3 +17,16 @@
 
 ---
 change to admin/teller/customer frame
+---
+# WHAT I HAVE LEARNED ABOUT PROGRAMMING STRUCTURE
+- Functions are good for dynamic code generation
+    - it provides a template of process for code to be generated
+- Classes are good for bundling up a set of code that have commonalities. It's some sort of factorization; taking common structures and grouping them together while leaving exceptions.
+
+- There is always a tradeoff between processing and storage. Processing takes time and storage takes space.
+A good combination of the 2 makes the program faster.
+
+---
+- [x] ~~input/entry fields not showing~~
+    solution: wrong placement of btn_width, called before assignment
+- [] back button
