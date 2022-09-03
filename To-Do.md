@@ -28,5 +28,13 @@ A good combination of the 2 makes the program faster.
 
 ---
 - [x] ~~input/entry fields not showing~~
-    solution: wrong placement of btn_width, called before assignment
-- [] back button
+    ==solution==: wrong placement of btn_width, called before assignment
+- [x] ~~back button~~
+    ==solution==: transframe function in gui_operations takes two frames, a previous and current for backward operation.
+    - pack the previous frame
+    - pack_forget the current frame
+    ==!!COROLARY PROBLEM==: frames are still in memory and they overlay next frames we enter.
+    ==! SOLVED==: destroy current frame. Re-run view function afterwards.
+- [] ticket page is created
+    - same page will be used for issuing of receipt
+- [] When teller logs in, there will not be any account functions coded. The only activity will have to be click 'serve customer', then a **receipt** will be generated

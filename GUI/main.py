@@ -1,6 +1,5 @@
 from tkinter import *
 from views import *
-from gui_operations import *
 
 root = Tk()
 window_properties = {
