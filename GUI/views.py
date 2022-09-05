@@ -1,6 +1,8 @@
 from ctypes import alignment
+import string
 from tkinter import *
 from tkinter.ttk import *
+from turtle import width
 from gui_operations import *
 
 
@@ -281,7 +283,8 @@ def ticket_page(win_prop,preframe,service=''):
     GAPy = 0.25
     dot = '.'*30 
     if service:
-      HEADING = HEADING + 'Ticket'
+      typ = 'Ticket'
+      HEADING = HEADING + typ
       back = customer_page
       label_content = f"Name: {dot}\nTicket ID: {dot}\nService: {dot}\nDate: {dot}"
       Label(frame,text=service+' Ticket',
@@ -291,7 +294,8 @@ def ticket_page(win_prop,preframe,service=''):
     else:
       GAPy = 0.1
       back = serve_customer
-      HEADING = HEADING + 'Receipt'
+      typ = 'Receipt'
+      HEADING = HEADING + typ
       label_content = f"Customer Name: {dot}\nService: {dot}\nAmount: {dot}\nDate Issuded: {dot}\nTeller ID: {dot}\nTeller Name: {dot}"
     
     Label(frame,text=HEADING,
@@ -311,10 +315,10 @@ def ticket_page(win_prop,preframe,service=''):
           fg=THEME_DARK, 
           width=BTN_WIDTH, 
           height=1,
-          command=lambda:go_back(frame,back, win_prop, frame)
+          command=lambda:go_back(frame,back, win_prop,frame)
           ).place(x=GAP, y=WIN_HEIGHT*0.8)
 
-    Button(frame, text="🖨️ Print Ticket",
+    Button(frame, text="🖨️ Print "+typ,
           font=f'{DEFAULT_FONT} 10 bold', 
           bd=0, bg="#90e210", 
           fg=THEME_DARK, 
@@ -375,10 +379,8 @@ def admin_panel_view(win_prop, preframe):
     WIN_HEIGHT, WIN_WIDTH = win_prop['WIN_HEIGHT'], win_prop['WIN_WIDTH']
     THEME_DARK, THEME_LIGHT = win_prop['THEME_DARK'], win_prop['THEME_LIGHT']
     DEFAULT_FONT = win_prop['DEFAULT_FONT']
-    BTN_WIDTH, BTN_HEIGHT = 18, 1
+    BTN_WIDTH, BTN_HEIGHT = 18, 2
     GAP = int((640-BTN_WIDTH*8*3)/(3+1))
-    My = place_center(WIN_HEIGHT, 3)
-
 
     ## FRAME SETUP
     preframe.pack_forget()
@@ -414,7 +416,7 @@ def admin_panel_view(win_prop, preframe):
          bg=THEME_LIGHT, 
          fg=THEME_DARK).place(x=WIN_WIDTH*0.59,y=WIN_HEIGHT*0.3)
 
-    label_content = f"Total Number of Tellers: {dot}\n\nTeller Queue #1: {dot}\nTeller Queue #2: {dot}\nTeller Queue #3: {dot}"
+    label_content = f"Total Number of Customers: {dot}\n\nTotal customers in queue: {dot}\nTotal customers served: {dot}"
     Label(frame,text=label_content,
           font=f'{DEFAULT_FONT} 10',
           justify=LEFT,
@@ -429,26 +431,26 @@ def admin_panel_view(win_prop, preframe):
            fg=THEME_LIGHT, 
            width=BTN_WIDTH, 
            height=BTN_HEIGHT,
-           command=''
-           ).place(x=GAP, y=WIN_HEIGHT*0.75)
+           command=lambda: create_queue_view(win_prop, frame, 'create')
+           ).place(x=GAP, y=WIN_HEIGHT*0.7)
     ### Delete Teller Queue
-    Button(frame, text="Delete Teller Queue", 
+    Button(frame, text="Reassign Teller Queue", 
            font=f'{DEFAULT_FONT} 10', 
            bd=0, bg='#2468ac', 
            fg=THEME_LIGHT, 
            width=BTN_WIDTH, 
            height=BTN_HEIGHT,
-           command=''
-           ).place(x=GAP*2+BTN_WIDTH*8, y=WIN_HEIGHT*0.75)
+           command=lambda: create_queue_view(win_prop, frame,'update')
+           ).place(x=GAP*2+BTN_WIDTH*8, y=WIN_HEIGHT*0.7)
     ### Assign Teller
-    Button(frame, text="Assign Teller",
+    Button(frame, text="Delete Teller",
            font=f'{DEFAULT_FONT} 10', 
            bd=0, bg='#70f', 
            fg=THEME_LIGHT, 
            width=BTN_WIDTH, 
            height=BTN_HEIGHT,
-           command=''
-           ).place(x=GAP*3+BTN_WIDTH*8*2, y=WIN_HEIGHT*0.75)
+           command=lambda: create_queue_view(win_prop, frame,'delete')
+           ).place(x=GAP*3+BTN_WIDTH*8*2, y=WIN_HEIGHT*0.7)
     ## back button
     Button(frame, text="❌ Logout",
           font=f'{DEFAULT_FONT} 10 bold', 
@@ -460,11 +462,124 @@ def admin_panel_view(win_prop, preframe):
           ).place(x=place_center(WIN_WIDTH, 15*8)-8, y=WIN_HEIGHT*0.85)
 
 # ========================================== #
-# CREATE TELLER QUEUE => created teller info
-## - name entry - service entry - confirm button - cancel button
+# CREATE TELLER QUEUE => NOTICE VIEW
+def create_queue_view(win_prop,preframe,crud):
+    '''- name entry - service option - confirm button - cancel button'''
+    # GLOBAL VARIABLES
+    root = win_prop['root']
+    WIN_HEIGHT, WIN_WIDTH = win_prop['WIN_HEIGHT'], win_prop['WIN_WIDTH']
+    THEME_DARK, THEME_LIGHT = win_prop['THEME_DARK'], win_prop['THEME_LIGHT']
+    DEFAULT_FONT = win_prop['DEFAULT_FONT']
+    BTN_WIDTH = 15
+    GAP = int((640-BTN_WIDTH*8*2)/(2+1))
 
-# ASSIGN TELLER QUEUE => notice page
-## - teller options - service entry - confirm button - cancel button
+    ## FRAME SETUP
+    preframe.pack_forget()
+    frame = Frame(root, bg=THEME_LIGHT)
+    frame.pack(fill='both', expand=1)
 
-# DELETE TELLER => notice page
-## - teller options - confirm button - cancel button 
+    if crud == 'delete':
+        action = 'Delete'
+        HEADING = "Delete a Teller Queue"
+        service_option ='Select Teller'
+        Label(frame, text=HEADING,font=f'{DEFAULT_FONT} 18 bold',justify=LEFT,
+             bg=THEME_LIGHT,fg=THEME_DARK).place(x=WIN_WIDTH*0.34,y=WIN_HEIGHT*0.1)   
+        Label(frame, text=service_option,font=f'{DEFAULT_FONT} 14',justify=LEFT,
+             bg=THEME_LIGHT,fg=THEME_DARK).place(x=WIN_WIDTH*0.43,y=WIN_HEIGHT*0.3)   
+        options = ['Teller #1', 'Teller #2', 'Teller #3']
+        selected = StringVar()
+        selected.set('----------')
+        OptionMenu(frame,selected,*options,).place(x=WIN_WIDTH*0.445,y=WIN_HEIGHT*0.45)
+
+    else:
+        HEADING = "Create New Teller Queue"
+        action = 'Create'
+        if crud == 'update':
+             HEADING = "Reassign Teller Queue"
+             action = 'Reassign'
+        # H1 Heading
+        Label(frame,text=HEADING,font=f'{DEFAULT_FONT} 18 bold',bg=THEME_LIGHT, 
+              fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.1)
+        ## Name field
+        teller_name, service_option = 'Teller Name', 'Select Service'
+        Label(frame, text=teller_name, 
+              font=f'{DEFAULT_FONT} 14', 
+              justify=LEFT,
+              bg=THEME_LIGHT, 
+              fg=THEME_DARK).place(x=WIN_WIDTH*0.4,y=WIN_HEIGHT*0.3)   
+        teller_id = Entry(frame, 
+              font= f'{DEFAULT_FONT} 10', 
+              fg='#666', 
+              width=30, 
+              bd=1).place(x=place_center(WIN_WIDTH,30*9),y=WIN_HEIGHT*0.4)
+        ## service options
+        Label(frame, text=service_option, 
+              font=f'{DEFAULT_FONT} 14', 
+              bg=THEME_LIGHT, 
+              fg=THEME_DARK).place(x=WIN_WIDTH*0.4,y=WIN_HEIGHT*0.5)    
+        options = ['Deposit', 'Transfer', 'Withdraw']
+        selected = StringVar()
+        selected.set(options[0])
+        OptionMenu(frame, 
+              selected, 
+              *options,
+              ).place(x=WIN_WIDTH*0.445,y=WIN_HEIGHT*0.6)  
+    ## buttons     
+    Button(frame, text="Cancel",
+          font=f'{DEFAULT_FONT} 10 bold', 
+          bd=0, bg='#d4af37', 
+          fg=THEME_DARK, 
+          width=BTN_WIDTH, 
+          height=1,
+          command=lambda:go_back(frame,admin_panel_view, win_prop, frame)
+          ).place(x=GAP, y=WIN_HEIGHT*0.8)
+
+    Button(frame, text="confirm",
+          font=f'{DEFAULT_FONT} 10 bold', 
+          bd=0, bg="#90e210", 
+          fg=THEME_DARK, 
+          width=BTN_WIDTH, 
+          height=1,
+          command=lambda: notice_view(win_prop, frame, action)
+          ).place(x=GAP*2+BTN_WIDTH*8, y=WIN_HEIGHT*0.8)
+
+
+# notice page
+def notice_view(win_prop, preframe, action):
+    # GLOBAL VARIABLES
+    root = win_prop['root']
+    WIN_HEIGHT, WIN_WIDTH = win_prop['WIN_HEIGHT'], win_prop['WIN_WIDTH']
+    THEME_DARK, THEME_LIGHT = win_prop['THEME_DARK'], win_prop['THEME_LIGHT']
+    DEFAULT_FONT = win_prop['DEFAULT_FONT']
+    BTN_WIDTH = 15
+    GAP = int((640-BTN_WIDTH*8*2)/(2+1))
+
+    ## FRAME SETUP
+    preframe.pack_forget()
+    frame = Frame(root, bg=THEME_LIGHT)
+    frame.pack(fill='both', expand=1)
+
+    # H1 Heading
+    HEADING = action+'d Teller'
+    Label(frame,text=HEADING,
+          font=f'{DEFAULT_FONT} 18 bold', 
+          bg=THEME_LIGHT, 
+          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*12)-12.5,y=WIN_HEIGHT*0.1)
+
+    dot = '*'*25
+    label_content = f"Teller Name: {dot}\nTeller ID: {dot}\nService: {dot}"
+    Label(frame,text=label_content,
+          font=f'{DEFAULT_FONT} 14',
+          justify=LEFT,
+          bg=THEME_LIGHT, 
+          fg=THEME_DARK).place(x=WIN_WIDTH*0.33,y=WIN_HEIGHT*0.35)
+
+    ## back button
+    Button(frame, text="Done",
+           font=f'{DEFAULT_FONT} 10 bold', 
+           bd=0, bg='#d4af37', 
+           fg=THEME_DARK, 
+           width=15, 
+           height=1,
+           command=lambda:go_back(frame,admin_panel_view, win_prop, frame)
+           ).place(x=place_center(WIN_WIDTH, 15*8), y=WIN_HEIGHT*0.8)
