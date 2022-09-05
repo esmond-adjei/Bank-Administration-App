@@ -38,3 +38,7 @@ A good combination of the 2 makes the program faster.
 - [] ticket page is created
     - same page will be used for issuing of receipt
 - [] When teller logs in, there will not be any account functions coded. The only activity will have to be click 'serve customer', then a **receipt** will be generated
+
+--- 
+- [x] Teller serve customer page back button
+- [x] Position of teller log out button

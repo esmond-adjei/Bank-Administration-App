@@ -277,12 +277,12 @@ def ticket_page(win_prop,preframe,service=''):
     frame.pack(fill='both', expand=1)
 
     # H1
-
     HEADING = "Print "
     GAPy = 0.25
     dot = '.'*30 
     if service:
       HEADING = HEADING + 'Ticket'
+      back = customer_page
       label_content = f"Name: {dot}\nTicket ID: {dot}\nService: {dot}\nDate: {dot}"
       Label(frame,text=service+' Ticket',
             font=f'{DEFAULT_FONT} 14', 
@@ -290,6 +290,7 @@ def ticket_page(win_prop,preframe,service=''):
             fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.25)
     else:
       GAPy = 0.1
+      back = serve_customer
       HEADING = HEADING + 'Receipt'
       label_content = f"Customer Name: {dot}\nService: {dot}\nAmount: {dot}\nDate Issuded: {dot}\nTeller ID: {dot}\nTeller Name: {dot}"
     
@@ -310,7 +311,7 @@ def ticket_page(win_prop,preframe,service=''):
           fg=THEME_DARK, 
           width=BTN_WIDTH, 
           height=1,
-          command=lambda:go_back(frame,customer_page, win_prop, frame)
+          command=lambda:go_back(frame,back, win_prop, frame)
           ).place(x=GAP, y=WIN_HEIGHT*0.8)
 
     Button(frame, text="🖨️ Print Ticket",
@@ -357,15 +358,15 @@ def serve_customer(win_prop, preframe):
       command=lambda: ticket_page(win_prop,frame)
       ).place(x=WIN_WIDTH*0.394, y=WIN_HEIGHT*0.45) 
 
-    ## back button
-    Button(frame, text="<<👈 Go Back",
+    ## exit button
+    Button(frame, text="❌ Logout",
           font=f'{DEFAULT_FONT} 10 bold', 
-          bd=0, bg='#d4af37', 
-          fg=THEME_DARK, 
+          bd=0, bg='#910900', 
+          fg=THEME_LIGHT, 
           width=15, 
           height=1,
-          command=lambda:go_back(frame,teller_login, win_prop)
-          ).place(x=place_center(WIN_WIDTH, 15*8), y=WIN_HEIGHT*0.8)
+          command=lambda:go_back(frame,home_view, win_prop)
+          ).place(x=place_center(WIN_WIDTH, 15*8)-3, y=WIN_HEIGHT*0.85)
 
 # =========== admin panel ================== #
 def admin_panel_view(win_prop, preframe):
@@ -389,7 +390,7 @@ def admin_panel_view(win_prop, preframe):
     Label(frame,text=HEADING,
           font=f'{DEFAULT_FONT} 18 bold', 
           bg=THEME_LIGHT, 
-          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*12),y=WIN_HEIGHT*0.1)
+          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*12)-12.5,y=WIN_HEIGHT*0.1)
 
     dot = '.'*10
     ## Teller Information
@@ -428,7 +429,7 @@ def admin_panel_view(win_prop, preframe):
            fg=THEME_LIGHT, 
            width=BTN_WIDTH, 
            height=BTN_HEIGHT,
-           command=lambda:ticket_page(win_prop,frame,'Deposit')
+           command=''
            ).place(x=GAP, y=WIN_HEIGHT*0.75)
     ### Delete Teller Queue
     Button(frame, text="Delete Teller Queue", 
@@ -437,7 +438,7 @@ def admin_panel_view(win_prop, preframe):
            fg=THEME_LIGHT, 
            width=BTN_WIDTH, 
            height=BTN_HEIGHT,
-           command=lambda:ticket_page(win_prop,frame,'Withdraw')
+           command=''
            ).place(x=GAP*2+BTN_WIDTH*8, y=WIN_HEIGHT*0.75)
     ### Assign Teller
     Button(frame, text="Assign Teller",
@@ -446,7 +447,7 @@ def admin_panel_view(win_prop, preframe):
            fg=THEME_LIGHT, 
            width=BTN_WIDTH, 
            height=BTN_HEIGHT,
-           command=lambda:ticket_page(win_prop,frame,'Transfer')
+           command=''
            ).place(x=GAP*3+BTN_WIDTH*8*2, y=WIN_HEIGHT*0.75)
     ## back button
     Button(frame, text="❌ Logout",
@@ -458,7 +459,7 @@ def admin_panel_view(win_prop, preframe):
           command=lambda:go_back(frame,home_view, win_prop)
           ).place(x=place_center(WIN_WIDTH, 15*8)-8, y=WIN_HEIGHT*0.85)
 
-
+# ========================================== #
 # CREATE TELLER QUEUE => created teller info
 ## - name entry - service entry - confirm button - cancel button
 
