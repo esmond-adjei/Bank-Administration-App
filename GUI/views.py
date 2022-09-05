@@ -1,9 +1,10 @@
+from ctypes import alignment
 from tkinter import *
 from tkinter.ttk import *
 from gui_operations import *
 
 
-def home_view(win_prop={}, frame=''):
+def home_view(win_prop, frame=''):
     """layout for the home window.
       home_view is created directly in the main window. No frame is used.
       The structure is laid out here.
@@ -123,7 +124,8 @@ def admin_login(win_prop,preframe):
            fg=THEME_LIGHT, 
            width=BTN_WIDTH, 
            height=1,
-           command='').place(x=place_center(WIN_WIDTH, BTN_WIDTH*8), y=WIN_HEIGHT*0.6)
+           command=lambda: admin_panel_view(win_prop, frame)
+           ).place(x=place_center(WIN_WIDTH, BTN_WIDTH*8), y=WIN_HEIGHT*0.6)
     ## back button
     BTN_WIDTH = BTN_WIDTH-15
     Button(frame, text="<<👈 Go Back",
@@ -187,7 +189,8 @@ def teller_login(win_prop,preframe):
            bd=0, bg=THEME_DARK, 
            fg=THEME_LIGHT, width=BTN_WIDTH, 
            height=1,
-           command='').place(x=place_center(WIN_WIDTH, BTN_WIDTH*8), y=WIN_HEIGHT*0.7)
+           command=lambda: serve_customer(win_prop, frame)
+           ).place(x=place_center(WIN_WIDTH, BTN_WIDTH*8), y=WIN_HEIGHT*0.7)
     ## back button
     Button(frame, text="<<👈 Go Back",
            font=f'{DEFAULT_FONT} 10 bold', 
@@ -274,28 +277,32 @@ def ticket_page(win_prop,preframe,service=''):
     frame.pack(fill='both', expand=1)
 
     # H1
-    HEADING = "Print Ticket"
+
+    HEADING = "Print "
+    GAPy = 0.25
+    dot = '.'*30 
+    if service:
+      HEADING = HEADING + 'Ticket'
+      label_content = f"Name: {dot}\nTicket ID: {dot}\nService: {dot}\nDate: {dot}"
+      Label(frame,text=service+' Ticket',
+            font=f'{DEFAULT_FONT} 14', 
+            bg=THEME_LIGHT, 
+            fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.25)
+    else:
+      GAPy = 0.1
+      HEADING = HEADING + 'Receipt'
+      label_content = f"Customer Name: {dot}\nService: {dot}\nAmount: {dot}\nDate Issuded: {dot}\nTeller ID: {dot}\nTeller Name: {dot}"
+    
     Label(frame,text=HEADING,
           font=f'{DEFAULT_FONT} 18 bold', 
           bg=THEME_LIGHT, 
           fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.1)
-
-    Label(frame,text=service+'  Ticket',
-          font=f'{DEFAULT_FONT} 14', 
+    
+    Label(frame,text=label_content,
+          font=f'{DEFAULT_FONT} 14',
+          justify=LEFT,
           bg=THEME_LIGHT, 
-          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.25)
-
-    label_content = [
-      'Name: ...............................',
-      'Ticket ID: ..........................',
-      'Service: .............................',
-      'Date: ................................',
-    ]
-    for l in range(len(label_content)):
-      Label(frame,text=label_content[l],
-          font=f'{DEFAULT_FONT} 10', 
-          bg=THEME_LIGHT, 
-          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*(0.4+l/10))
+          fg=THEME_DARK).place(x=WIN_WIDTH*0.25,y=WIN_HEIGHT*(GAPy+0.15))
     
     Button(frame, text="<<👈 Go Back",
           font=f'{DEFAULT_FONT} 10 bold', 
@@ -314,3 +321,149 @@ def ticket_page(win_prop,preframe,service=''):
           height=1,
           command=''
           ).place(x=GAP*2+BTN_WIDTH*8, y=WIN_HEIGHT*0.8)
+
+
+def serve_customer(win_prop, preframe):
+    # GLOBAL VARIABLES
+    root = win_prop['root']
+    WIN_HEIGHT, WIN_WIDTH = win_prop['WIN_HEIGHT'], win_prop['WIN_WIDTH']
+    THEME_DARK, THEME_LIGHT = win_prop['THEME_DARK'], win_prop['THEME_LIGHT']
+    DEFAULT_FONT = win_prop['DEFAULT_FONT']
+    BTN_WIDTH, BTN_HEIGHT = 15,3
+    My = place_center(WIN_HEIGHT, BTN_HEIGHT)
+
+    ## FRAME SETUP
+    preframe.pack_forget()
+    frame = Frame(root, bg=THEME_LIGHT)
+    frame.pack(fill='both', expand=1)
+
+    ## Heading 
+    HEADING = "Serve Customer"
+    Label(frame,text=HEADING,
+          font=f'{DEFAULT_FONT} 18 bold', 
+          bg=THEME_LIGHT, 
+          fg=THEME_DARK
+          ).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.2)
+
+    ## serve customer button
+    Button(frame, 
+      text='serve customer', 
+      font=f"{DEFAULT_FONT} 12", 
+      bd=0, 
+      bg="#90e210", 
+      fg=THEME_DARK, 
+      width=BTN_WIDTH, 
+      height=BTN_HEIGHT,
+      command=lambda: ticket_page(win_prop,frame)
+      ).place(x=WIN_WIDTH*0.394, y=WIN_HEIGHT*0.45) 
+
+    ## back button
+    Button(frame, text="<<👈 Go Back",
+          font=f'{DEFAULT_FONT} 10 bold', 
+          bd=0, bg='#d4af37', 
+          fg=THEME_DARK, 
+          width=15, 
+          height=1,
+          command=lambda:go_back(frame,teller_login, win_prop)
+          ).place(x=place_center(WIN_WIDTH, 15*8), y=WIN_HEIGHT*0.8)
+
+# =========== admin panel ================== #
+def admin_panel_view(win_prop, preframe):
+    # GLOBAL VARIABLES
+    root = win_prop['root']
+    WIN_HEIGHT, WIN_WIDTH = win_prop['WIN_HEIGHT'], win_prop['WIN_WIDTH']
+    THEME_DARK, THEME_LIGHT = win_prop['THEME_DARK'], win_prop['THEME_LIGHT']
+    DEFAULT_FONT = win_prop['DEFAULT_FONT']
+    BTN_WIDTH, BTN_HEIGHT = 18, 1
+    GAP = int((640-BTN_WIDTH*8*3)/(3+1))
+    My = place_center(WIN_HEIGHT, 3)
+
+
+    ## FRAME SETUP
+    preframe.pack_forget()
+    frame = Frame(root, bg=THEME_LIGHT)
+    frame.pack(fill='both', expand=1)
+
+    # H1 Heading
+    HEADING = "Admin Panel"
+    Label(frame,text=HEADING,
+          font=f'{DEFAULT_FONT} 18 bold', 
+          bg=THEME_LIGHT, 
+          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*12),y=WIN_HEIGHT*0.1)
+
+    dot = '.'*10
+    ## Teller Information
+    HEADING = 'Teller Info'
+    Label(frame,text=HEADING,
+         font=f'{DEFAULT_FONT} 12 bold', 
+         bg=THEME_LIGHT, 
+         fg=THEME_DARK).place(x=WIN_WIDTH*0.14,y=WIN_HEIGHT*0.3)
+
+    label_content = f"Total Number of Tellers: {dot}\n\nTeller Queue #1: {dot}\nTeller Queue #2: {dot}\nTeller Queue #3: {dot}"
+    Label(frame,text=label_content,
+          font=f'{DEFAULT_FONT} 10',
+          justify=LEFT,
+          bg=THEME_LIGHT, 
+          fg=THEME_DARK).place(x=WIN_WIDTH*0.1,y=WIN_HEIGHT*0.4)
+    
+    ## Customer Information
+    HEADING = 'Customer Info'
+    Label(frame,text=HEADING,
+         font=f'{DEFAULT_FONT} 12 bold', 
+         bg=THEME_LIGHT, 
+         fg=THEME_DARK).place(x=WIN_WIDTH*0.59,y=WIN_HEIGHT*0.3)
+
+    label_content = f"Total Number of Tellers: {dot}\n\nTeller Queue #1: {dot}\nTeller Queue #2: {dot}\nTeller Queue #3: {dot}"
+    Label(frame,text=label_content,
+          font=f'{DEFAULT_FONT} 10',
+          justify=LEFT,
+          bg=THEME_LIGHT, 
+          fg=THEME_DARK).place(x=WIN_WIDTH*0.55,y=WIN_HEIGHT*0.4)
+
+    ## buttons
+    ### Create Teller Queue
+    Button(frame, text="Create Teller Queue", 
+           font=f'{DEFAULT_FONT} 10', 
+           bd=0, bg='#975318', 
+           fg=THEME_LIGHT, 
+           width=BTN_WIDTH, 
+           height=BTN_HEIGHT,
+           command=lambda:ticket_page(win_prop,frame,'Deposit')
+           ).place(x=GAP, y=WIN_HEIGHT*0.75)
+    ### Delete Teller Queue
+    Button(frame, text="Delete Teller Queue", 
+           font=f'{DEFAULT_FONT} 10', 
+           bd=0, bg='#2468ac', 
+           fg=THEME_LIGHT, 
+           width=BTN_WIDTH, 
+           height=BTN_HEIGHT,
+           command=lambda:ticket_page(win_prop,frame,'Withdraw')
+           ).place(x=GAP*2+BTN_WIDTH*8, y=WIN_HEIGHT*0.75)
+    ### Assign Teller
+    Button(frame, text="Assign Teller",
+           font=f'{DEFAULT_FONT} 10', 
+           bd=0, bg='#70f', 
+           fg=THEME_LIGHT, 
+           width=BTN_WIDTH, 
+           height=BTN_HEIGHT,
+           command=lambda:ticket_page(win_prop,frame,'Transfer')
+           ).place(x=GAP*3+BTN_WIDTH*8*2, y=WIN_HEIGHT*0.75)
+    ## back button
+    Button(frame, text="❌ Logout",
+          font=f'{DEFAULT_FONT} 10 bold', 
+          bd=0, bg='#910900', 
+          fg=THEME_LIGHT, 
+          width=15, 
+          height=1,
+          command=lambda:go_back(frame,home_view, win_prop)
+          ).place(x=place_center(WIN_WIDTH, 15*8)-8, y=WIN_HEIGHT*0.85)
+
+
+# CREATE TELLER QUEUE => created teller info
+## - name entry - service entry - confirm button - cancel button
+
+# ASSIGN TELLER QUEUE => notice page
+## - teller options - service entry - confirm button - cancel button
+
+# DELETE TELLER => notice page
+## - teller options - confirm button - cancel button 
