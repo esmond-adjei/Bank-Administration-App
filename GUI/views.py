@@ -278,12 +278,24 @@ def ticket_page(win_prop,preframe,service=''):
     Label(frame,text=HEADING,
           font=f'{DEFAULT_FONT} 18 bold', 
           bg=THEME_LIGHT, 
-          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.2)
+          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.1)
 
-    Label(frame,text=service,
+    Label(frame,text=service+'  Ticket',
           font=f'{DEFAULT_FONT} 14', 
           bg=THEME_LIGHT, 
-          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.3)
+          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*0.25)
+
+    label_content = [
+      'Name: ...............................',
+      'Ticket ID: ..........................',
+      'Service: .............................',
+      'Date: ................................',
+    ]
+    for l in range(len(label_content)):
+      Label(frame,text=label_content[l],
+          font=f'{DEFAULT_FONT} 10', 
+          bg=THEME_LIGHT, 
+          fg=THEME_DARK).place(x=place_center(WIN_WIDTH,len(HEADING)*13),y=WIN_HEIGHT*(0.4+l/10))
     
     Button(frame, text="<<👈 Go Back",
           font=f'{DEFAULT_FONT} 10 bold', 
