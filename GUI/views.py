@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter.ttk import *
-from turtle import width
 from gui_operations import *
 
 
