@@ -1,5 +1,3 @@
-from ctypes import alignment
-import string
 from tkinter import *
 from tkinter.ttk import *
 from turtle import width
